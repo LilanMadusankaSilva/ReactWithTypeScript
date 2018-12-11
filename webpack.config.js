@@ -6,7 +6,7 @@ module.exports = {
     mode: "production",
     devtool: "nosources-source-map",
     entry: {
-        app: ['./src/app/App.tsx', 'webpack-hot-middleware/client'],
+        app: ['./src/app/app.tsx', 'webpack-hot-middleware/client'],
         vendor: ['react', 'react-dom']
     },
     output: {

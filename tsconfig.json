@@ -1,16 +1,26 @@
 {
-    "compilerOptions": {
-      "allowSyntheticDefaultImports": true,
-      "jsx": "react",
-      "module": "commonjs",
-      "noImplicitAny": true,
-      "outDir": "./build/",
-      "preserveConstEnums": true,
-      "removeComments": true,
-      "sourceMap": true,
-      "target": "es5"
-    },
-    "include": [
-      "./src/**/**/*"
-    ]
-  }
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "jsx": "react",
+    "noImplicitAny": true,
+    "outDir": "./build/",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "es5",
+
+    // React default setting
+    "allowJs": true,
+    "skipLibCheck": false,
+    "esModuleInterop": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,    
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "./src/**/**/*"
+  ]
+}
