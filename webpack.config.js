@@ -1,10 +1,12 @@
-const path = require('path'),
-    webpack = require('webpack'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const isProduction = false;
 
 module.exports = {
-    mode: "production",
-    devtool: "nosources-source-map",
+    mode: isProduction ? "production" : "development",
+    devtool: isProduction ? "nosources-source-map" : "source-map",
     entry: {
         app: ['./src/app/app.tsx', 'webpack-hot-middleware/client'],
         vendor: ['react', 'react-dom']
@@ -14,13 +16,25 @@ module.exports = {
         filename: 'js/[name].bundle.js'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
+        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss']
     },
     module: {
         rules: [
             {
                 test: /\.(ts|tsx)$/,
                 loader: 'ts-loader'
+            },
+            {
+                test: /\.scss$/,
+                use: [{
+                    loader: isProduction ? MiniCssExtractPlugin.loader : "style-loader"
+                },
+                {
+                    loader: "css-loader"
+                },
+                {
+                    loader: "sass-loader"
+                }]
             },
             { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
