@@ -1,10 +1,9 @@
-const path = require('path');
-const express = require('express');
-const webpack = require('webpack');
-const webpackConfig = require('./webpack.config.js');
-const app = express();
-const port = process.env.PORT || 3000;
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const path = require('path'),
+    express = require('express'),
+    webpack = require('webpack'),
+    webpackConfig = require('./webpack.config.js'),
+    app = express(),
+    port = process.env.PORT || 3000;
 
 app.listen(port, () => { console.log(`App is listening on port ${port}`) });
 app.get('/', (req, res) => {
@@ -12,8 +11,8 @@ app.get('/', (req, res) => {
 });
 
 let compiler = webpack(webpackConfig);
-app.use(webpackHotMiddleware(compiler, {
+app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath, stats: { colors: true }
 }));
-app.use(webpackHotMiddleware(compiler));
+app.use(require('webpack-hot-middleware')(compiler));
 app.use(express.static(path.resolve(__dirname, 'dist')));
