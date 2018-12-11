@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const isProduction = false;
 
 module.exports = {
@@ -9,6 +8,7 @@ module.exports = {
     devtool: isProduction ? "nosources-source-map" : "source-map",
     entry: {
         app: ['./src/app/app.tsx', 'webpack-hot-middleware/client'],
+        css: './src/app/app.scss',
         vendor: ['react', 'react-dom']
     },
     output: {
@@ -16,7 +16,7 @@ module.exports = {
         filename: 'js/[name].bundle.js'
     },
     resolve: {
-        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss']
+        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.scss', '.css']
     },
     module: {
         rules: [
@@ -27,7 +27,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [{
-                    loader: isProduction ? MiniCssExtractPlugin.loader : "style-loader"
+                    loader: "style-loader"
                 },
                 {
                     loader: "css-loader"
@@ -35,12 +35,15 @@ module.exports = {
                 {
                     loader: "sass-loader"
                 }]
-            },
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+            }
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'app', 'index.html') }),
+        new HtmlWebpackPlugin(
+            {
+                template: path.resolve(__dirname, 'src', 'app', 'index.html')
+            }
+        ),
         new webpack.HotModuleReplacementPlugin()
     ]
 };
