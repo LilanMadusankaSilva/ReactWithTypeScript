@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./home.scss";
 
 interface IProps {
     compiler: string;
@@ -6,7 +7,7 @@ interface IProps {
     bundler: string;
 }
 
-export class Hello extends React.Component<IProps, {}> {
+export class Home extends React.Component<IProps, {}> {
 
     public render() {
         return (
