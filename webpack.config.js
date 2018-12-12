@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const isProduction = false;
 
 module.exports = {
@@ -56,6 +57,10 @@ module.exports = {
                 template: path.resolve(__dirname, 'src', 'app', 'index.html')
             }
         ),
+        new CopyWebpackPlugin(
+            [
+                { from: path.resolve(__dirname, 'src', 'app', 'assets'), to: path.resolve(__dirname, 'dist', 'content') }
+            ]),
         new webpack.HotModuleReplacementPlugin()
     ]
 };
