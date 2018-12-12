@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const isProduction = false;
 
@@ -26,9 +27,18 @@ module.exports = {
                 loader: 'ts-loader'
             },
             {
+                test: /\.css$/,
+                use: [{
+                    loader: MiniCssExtractPlugin.loader
+                },
+                {
+                    loader: "css-loader"
+                }]
+            },
+            {
                 test: /\.scss$/,
                 use: [{
-                    loader: "style-loader"
+                    loader: MiniCssExtractPlugin.loader
                 },
                 {
                     loader: "css-loader"
@@ -60,7 +70,14 @@ module.exports = {
         new CopyWebpackPlugin(
             [
                 { from: path.resolve(__dirname, 'src', 'app', 'assets'), to: path.resolve(__dirname, 'dist', 'content') }
-            ]),
+            ]
+        ),
+        new MiniCssExtractPlugin(
+            {
+                filename: "[name].css",
+                chunkFilename: "[id].css"
+            }
+        ),
         new webpack.HotModuleReplacementPlugin()
     ]
 };
